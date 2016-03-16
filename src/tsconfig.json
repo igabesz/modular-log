@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
+        "outDir": "../lib/",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "declaration": true,
@@ -11,10 +12,8 @@
         "sourceMap": true
     },
     "filesGlob": [
-        "./typings/main.d.ts",
         "./*.ts",
-        "./tests/*.ts",
-        "./examples/*.ts"
+        "../typings/main.d.ts"
     ],
     "atom": {
         "rewriteTsconfig": false

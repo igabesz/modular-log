@@ -2,7 +2,8 @@
   "name": "modular-log",
   "version": "0.0.0",
   "description": "Modular components based on Winston looger",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "typings": "lib/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
