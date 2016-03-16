@@ -1,5 +1,6 @@
 .atomignore
 .editorconfig
-.typing.json
-.tslint.json
+typing.json
+tslint.json
 src/
+typings/
