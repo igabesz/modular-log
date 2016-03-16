@@ -1,5 +1,5 @@
 {
-  "name": "winston-modular",
+  "name": "modular-log",
   "version": "0.0.0",
   "description": "Modular components based on Winston looger",
   "main": "index.js",
@@ -9,7 +9,8 @@
   "keywords": [
     "winston",
     "log",
-    "logging"
+    "logging",
+    "modular"
   ],
   "author": "Gábor IMRE",
   "license": "MIT",
