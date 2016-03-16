@@ -5,8 +5,12 @@ import * as colors from 'colors/safe';
 
 
 export interface Logger extends winston.LoggerInstance {
-	fatal(...params): void;
-	trace(...params): void;
+	fatal(msg: string, meta: any, callback?: () => void): Logger;
+	error(msg: string, meta: any, callback?: () => void): Logger;
+	warn(msg: string, meta: any, callback?: () => void): Logger;
+	info(msg: string, meta: any, callback?: () => void): Logger;
+	debug(msg: string, meta: any, callback?: () => void): Logger;
+	trace(msg: string, meta: any, callback?: () => void): Logger;
 }
 
 export const levels = { fatal: 0, error: 1, warn: 2, info: 3, debug: 4, trace: 5 };
