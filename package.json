@@ -1,6 +1,6 @@
 {
   "name": "modular-log",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Modular components based on Winston looger",
   "main": "lib/index.js",
   "typings": "lib/index",
