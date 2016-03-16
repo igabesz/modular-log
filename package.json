@@ -1,0 +1,22 @@
+{
+  "name": "winston-modular",
+  "version": "0.0.0",
+  "description": "Modular components based on Winston looger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "winston",
+    "log",
+    "logging"
+  ],
+  "author": "Gábor IMRE",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "lodash": "^4.6.1",
+    "moment": "^2.12.0",
+    "winston": "^2.2.0"
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+typings/
+*.js.map
+tests/*.d.ts
+examples/*.d.ts

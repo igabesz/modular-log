@@ -1,0 +1,7 @@
+{
+  "ambientDependencies": {
+    "lodash": "registry:dt/lodash#3.10.0+20160308151359",
+    "moment": "registry:dt/moment#2.8.0+20150810140021",
+    "winston": "registry:dt/winston#0.0.0+20160304133439"
+  }
+}
