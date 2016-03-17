@@ -15,6 +15,10 @@ export declare const levels: {
     debug: number;
     trace: number;
 };
-export declare function createConsoleLogger(options: any): void;
-export declare function createFileLogger(options: any): void;
+export declare function setupConsoleLogger(options: any): void;
+export declare function setupFileLogger(options: any): void;
+export declare function setupSummarizer(): void;
+export declare function sumLog(): {
+    [index: string]: number;
+};
 export declare function createLogger(module: string): Logger;

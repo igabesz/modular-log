@@ -1,15 +1,17 @@
 import * as log from '../lib/index';
 
 // Create project level console log
-log.createConsoleLogger({
+log.setupConsoleLogger({
 	level: 'trace',
 });
 
 // Cretate project level file log
-log.createFileLogger({
+log.setupFileLogger({
 	filename: 'outfile.log',
 	level: 'warn',
 });
+
+log.setupSummarizer();
 
 let cnt = 0; // Helper variable
 
@@ -28,3 +30,5 @@ setTimeout(() => logger.fatal('Testing', { cnt: cnt++ }), 1000);
 // Second logger object
 let logger2 = log.createLogger('Another');
 logger2.warn('Another guy here');
+let sum = log.sumLog();
+logger2.debug('Sum without this message', sum);

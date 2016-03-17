@@ -1,14 +1,15 @@
 "use strict";
 var log = require('../lib/index');
 // Create project level console log
-log.createConsoleLogger({
+log.setupConsoleLogger({
     level: 'trace',
 });
 // Cretate project level file log
-log.createFileLogger({
+log.setupFileLogger({
     filename: 'outfile.log',
     level: 'warn',
 });
+log.setupSummarizer();
 var cnt = 0; // Helper variable
 // First logger object
 var logger = log.createLogger('App');
@@ -23,3 +24,5 @@ setTimeout(function () { return logger.fatal('Testing', { cnt: cnt++ }); }, 1000
 // Second logger object
 var logger2 = log.createLogger('Another');
 logger2.warn('Another guy here');
+var sum = log.sumLog();
+logger2.debug('Sum without this message', sum);

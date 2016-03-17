@@ -2,7 +2,10 @@ import * as winston from 'winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as colors from 'colors/safe';
+import { Summarizer } from './summarizer';
 
+//------------------------------------------------------------------------------
+// Definitions
 
 export interface Logger extends winston.LoggerInstance {
 	fatal(msg: string, meta?: any, callback?: () => void): Logger;
@@ -14,9 +17,13 @@ export interface Logger extends winston.LoggerInstance {
 }
 
 export const levels = { fatal: 0, error: 1, warn: 2, info: 3, debug: 4, trace: 5 };
+
+//------------------------------------------------------------------------------
+// Internal helpers
+
 const levelColors = { fatal: 'bgRed', error: 'red', warn: 'yellow', info: 'cyan', debug: 'blue', trace: 'blue' };
 
-const createRewriter = (module: string) => {
+function createRewriter(module: string) {
 	return (level: string, msg: string, meta: any): any => {
 		meta.at = Date.now();
 		meta.module = module;
@@ -41,19 +48,32 @@ function createFormatter(useColors?: boolean) {
 	};
 };
 
-let transports: winston.TransportInstance[] = [];
+//------------------------------------------------------------------------------
+// Transport layers
 
-export function createConsoleLogger(options: any) {
+let transports: winston.TransportInstance[] = [];
+let summarizer: Summarizer = null;
+
+export function setupConsoleLogger(options: any) {
 	options.formatter = createFormatter(true);
 	transports.push(new winston.transports.Console(options));
 }
 
-export function createFileLogger(options: any) {
+export function setupFileLogger(options: any) {
 	options.formatter = createFormatter();
 	options.json = false;
 	transports.push(new winston.transports.File(options));
 }
 
+export function setupSummarizer() {
+	summarizer = new Summarizer();
+	transports.push(summarizer);
+}
+
+export function sumLog() { return summarizer ? summarizer.cnt : {}; }
+
+//------------------------------------------------------------------------------
+// Logger instances
 
 export function createLogger(module: string): Logger {
 	return <any>new winston.Logger(<any>{
