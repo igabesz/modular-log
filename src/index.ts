@@ -35,7 +35,7 @@ function createRewriter(module: string) {
 
 function createFormatter(useColors?: boolean) {
 	return (options: any) => {
-		//console.log(options);
+		console.log(options);
 		let atStr = moment(options.meta.at).format('YYYY-MM-DD hh:mm:ss');
 		useColors && (atStr = colors.gray(atStr));
 		let levelStr = options.level.toUpperCase();
@@ -67,8 +67,8 @@ export function setupFileLogger(options: any) {
 	transports.push(new winston.transports.File(options));
 }
 
-export function setupSummarizer(options: SummarizerOptions) {
-	summarizer = new Summarizer();
+export function setupSummarizer(options?: SummarizerOptions) {
+	summarizer = new Summarizer(options || {});
 	transports.push(summarizer);
 }
 

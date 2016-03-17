@@ -4,7 +4,7 @@ export interface SummarizerOptions {
     allowed?: {
         [level: string]: number;
     };
-    [index: string]: any;
+    [param: string]: any;
 }
 export declare class Summarizer extends winston.Transport {
     name: string;
@@ -13,9 +13,9 @@ export declare class Summarizer extends winston.Transport {
         [level: string]: number;
     };
     cnt: {
-        [index: string]: number;
+        [level: string]: number;
     };
-    constructor(options?: any);
+    constructor(options: SummarizerOptions);
     log(level: any, msg: any, meta: any, callback: any): void;
     canContinue(): boolean;
     tryContinue(): void;

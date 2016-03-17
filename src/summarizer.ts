@@ -4,16 +4,16 @@ import * as winston from 'winston';
 export interface SummarizerOptions {
 	level?: string;
 	allowed?: { [level: string]: number };
-	[index: string]: any;
+	[param: string]: any;
 }
 
 export class Summarizer extends winston.Transport {
 	name = 'summarizer';
 	level: string;
 	allowed: { [level: string]: number };
-	cnt: { [index: string]: number };
+	cnt: { [level: string]: number };
 
-	constructor(options: any = {}) {
+	constructor(options: SummarizerOptions) {
 		super(options);
 		this.level = options.level || 'warn';
 		this.allowed = options.allowed || {};

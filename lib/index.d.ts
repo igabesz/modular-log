@@ -20,9 +20,9 @@ export declare const levels: {
 };
 export declare function setupConsoleLogger(options: any): void;
 export declare function setupFileLogger(options: any): void;
-export declare function setupSummarizer(options: SummarizerOptions): void;
+export declare function setupSummarizer(options?: SummarizerOptions): void;
 export declare function sumLog(): {
-    [index: string]: number;
+    [level: string]: number;
 };
 export declare function canContinue(): boolean;
 export declare function tryContinue(): void;
