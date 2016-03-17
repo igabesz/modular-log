@@ -37,7 +37,7 @@ function createRewriter(module: string) {
 
 function createFormatter(useColors?: boolean) {
 	return (options: any) => {
-		console.log(options);
+		//console.log(options);
 		let atStr = moment(options.meta.at).format('YYYY-MM-DD hh:mm:ss');
 		useColors && (atStr = colors.gray(atStr));
 		let levelStr = options.level.toUpperCase();
@@ -58,12 +58,17 @@ function createFormatter(useColors?: boolean) {
 let transports: winston.TransportInstance[] = [];
 let summarizer: Summarizer = null;
 
-export function setupConsoleLogger(options: any) {
+export interface ConsoleLoggerOptions extends winston.ConsoleTransportOptions {}
+
+export function setupConsoleLogger(options?: ConsoleLoggerOptions) {
 	options.formatter = createFormatter(true);
-	transports.push(new winston.transports.Console(options));
+	transports.push(new winston.transports.Console(options || {}));
 }
 
-export function setupFileLogger(options: any) {
+export interface FileLoggerOptions extends winston.FileTransportOptions {}
+
+export function setupFileLogger(options?: FileLoggerOptions) {
+	options = options || {};
 	options.formatter = createFormatter();
 	options.json = false;
 	transports.push(new winston.transports.File(options));

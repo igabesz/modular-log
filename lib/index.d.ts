@@ -19,8 +19,12 @@ export declare const levels: {
     debug: number;
     trace: number;
 };
-export declare function setupConsoleLogger(options: any): void;
-export declare function setupFileLogger(options: any): void;
+export interface ConsoleLoggerOptions extends winston.ConsoleTransportOptions {
+}
+export declare function setupConsoleLogger(options?: ConsoleLoggerOptions): void;
+export interface FileLoggerOptions extends winston.FileTransportOptions {
+}
+export declare function setupFileLogger(options?: FileLoggerOptions): void;
 export declare function setupSummarizer(options?: SummarizerOptions): void;
 export declare function sumLog(): {
     [level: string]: number;
