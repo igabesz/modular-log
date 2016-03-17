@@ -8,6 +8,8 @@ import { LogLevels } from './definitions.d';
 //------------------------------------------------------------------------------
 // Definitions
 
+export { LogLevels } from './definitions.d';
+
 export interface Logger extends winston.LoggerInstance {
 	fatal(msg: string, meta?: any, callback?: () => void): Logger;
 	error(msg: string, meta?: any, callback?: () => void): Logger;
