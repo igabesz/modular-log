@@ -2,7 +2,8 @@ import * as winston from 'winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as colors from 'colors/safe';
-import { Summarizer } from './summarizer';
+import { Summarizer, SummarizerOptions } from './summarizer';
+import { LogLevels } from './definitions.d';
 
 //------------------------------------------------------------------------------
 // Definitions
@@ -14,6 +15,7 @@ export interface Logger extends winston.LoggerInstance {
 	info(msg: string, meta?: any, callback?: () => void): Logger;
 	debug(msg: string, meta?: any, callback?: () => void): Logger;
 	trace(msg: string, meta?: any, callback?: () => void): Logger;
+	log(level: LogLevels, msg: string, meta?: any, callback?: () => void): Logger;
 }
 
 export const levels = { fatal: 0, error: 1, warn: 2, info: 3, debug: 4, trace: 5 };
@@ -65,12 +67,14 @@ export function setupFileLogger(options: any) {
 	transports.push(new winston.transports.File(options));
 }
 
-export function setupSummarizer() {
+export function setupSummarizer(options: SummarizerOptions) {
 	summarizer = new Summarizer();
 	transports.push(summarizer);
 }
 
 export function sumLog() { return summarizer ? summarizer.cnt : {}; }
+export function canContinue() { return summarizer ? summarizer.canContinue() : true; }
+export function tryContinue() { return summarizer && summarizer.tryContinue(); }
 
 //------------------------------------------------------------------------------
 // Logger instances
