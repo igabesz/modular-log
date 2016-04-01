@@ -61,8 +61,9 @@ let summarizer: Summarizer = null;
 export interface ConsoleLoggerOptions extends winston.ConsoleTransportOptions {}
 
 export function setupConsoleLogger(options?: ConsoleLoggerOptions) {
+	options = options || {};
 	options.formatter = createFormatter(true);
-	transports.push(new winston.transports.Console(options || {}));
+	transports.push(new winston.transports.Console(options));
 }
 
 export interface FileLoggerOptions extends winston.FileTransportOptions {}
@@ -75,7 +76,8 @@ export function setupFileLogger(options?: FileLoggerOptions) {
 }
 
 export function setupSummarizer(options?: SummarizerOptions) {
-	summarizer = new Summarizer(options || {});
+	options = options || {};
+	summarizer = new Summarizer(options);
 	transports.push(summarizer);
 }
 
