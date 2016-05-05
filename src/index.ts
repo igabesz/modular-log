@@ -14,18 +14,19 @@ export interface Logger extends winston.LoggerInstance {
 	fatal(msg: string, meta?: any, callback?: () => void): Logger;
 	error(msg: string, meta?: any, callback?: () => void): Logger;
 	warn(msg: string, meta?: any, callback?: () => void): Logger;
+	success(msg: string, meta?: any, callback?: () => void): Logger;
 	info(msg: string, meta?: any, callback?: () => void): Logger;
 	debug(msg: string, meta?: any, callback?: () => void): Logger;
 	trace(msg: string, meta?: any, callback?: () => void): Logger;
 	log(level: LogLevels, msg: string, meta?: any, callback?: () => void): Logger;
 }
 
-export const levels = { fatal: 0, error: 1, warn: 2, info: 3, debug: 4, trace: 5 };
+export const levels = { fatal: 0, error: 1, warn: 2, success: 3, info: 4, debug: 5, trace: 6 };
 
 //------------------------------------------------------------------------------
 // Internal helpers
 
-const levelColors = { fatal: 'bgRed', error: 'red', warn: 'yellow', info: 'cyan', debug: 'blue', trace: 'blue' };
+const levelColors = { fatal: 'bgRed', error: 'red', warn: 'yellow', success: 'bgGreen', info: 'cyan', debug: 'blue', trace: 'blue' };
 
 function createRewriter(module: string) {
 	return (level: string, msg: string, meta: any): any => {
