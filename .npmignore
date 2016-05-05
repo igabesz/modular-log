@@ -4,3 +4,4 @@ typings.json
 tslint.json
 src/
 typings/
+tests/
