@@ -1,7 +1,6 @@
 import * as winston from 'winston';
 import { SummarizerOptions } from './summarizer';
-import { LogLevels } from './definitions.d';
-export { LogLevels } from './definitions.d';
+export declare type LogLevels = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 export interface Logger extends winston.LoggerInstance {
     fatal(msg: string, meta?: any, callback?: () => void): Logger;
     error(msg: string, meta?: any, callback?: () => void): Logger;

@@ -3,5 +3,5 @@
 typings.json
 tslint.json
 src/
-typings/
-tests/
+*.log
+.npmignore

@@ -2,17 +2,14 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
+        "outDir": "./lib/",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "noImplicitAny": false,
+        "declaration": true,
         "removeComments": true,
         "preserveConstEnums": true
     },
-    "files": [
-        "./example.ts",
-        "../typings/main.d.ts"
-    ],
-    "atom": {
-        "rewriteTsconfig": false
-    }
+    "include": [
+        "src/**/*.ts"
+    ]
 }

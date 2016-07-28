@@ -1,17 +1,17 @@
-import * as log from '../lib/index';
+import * as Log from '../lib/index';
 
 // Create project level console log
-log.setupConsoleLogger({
+Log.setupConsoleLogger({
 	level: 'trace',
 });
 
 // Cretate project level file log
-log.setupFileLogger({
+Log.setupFileLogger({
 	filename: 'outfile.log',
 	level: 'warn',
 });
 
-log.setupSummarizer({
+Log.setupSummarizer({
 	level: 'warn',
 	allowed: { fatal: 0 }
 });
@@ -19,22 +19,23 @@ log.setupSummarizer({
 let cnt = 0; // Helper variable
 
 // First logger object
-let logger = log.createLogger('App');
+let logger = Log.createLogger('App');
 logger.error('Testing', { cnt: cnt++ });
 logger.warn('Testing', { cnt: cnt++ });
+logger.success('Testing', { cnt: cnt++ });
 logger.info('Testing', { cnt: cnt++ });
 logger.debug('Testing', { cnt: cnt++ });
 logger.trace('Testing', { cnt: cnt++ });
-logger.trace('canContinue', log.canContinue());
+logger.trace('canContinue', Log.canContinue());
 
 // Preparing delayed log
 setTimeout(() => {
 	logger.fatal('Testing', { cnt: cnt++ });
-	logger.warn('CanContinue', log.canContinue());
+	logger.warn('CanContinue', Log.canContinue());
 }, 1000);
 
 // Second logger object
-let logger2 = log.createLogger('Another');
+let logger2 = Log.createLogger('Another');
 logger2.warn('Another guy here');
-let sum = log.sumLog();
+let sum = Log.sumLog();
 logger2.debug('Sum without this message', sum);

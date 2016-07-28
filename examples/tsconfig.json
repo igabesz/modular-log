@@ -10,11 +10,7 @@
         "preserveConstEnums": true,
         "sourceMap": false
     },
-    "filesGlob": [
-        "./*.ts",
-        "../typings/main.d.ts"
-    ],
-    "atom": {
-        "rewriteTsconfig": false
-    }
+    "include": [
+        "./*.ts"
+    ]
 }

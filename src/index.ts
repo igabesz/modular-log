@@ -3,12 +3,11 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as colors from 'colors/safe';
 import { Summarizer, SummarizerOptions } from './summarizer';
-import { LogLevels } from './definitions.d';
+
+export type LogLevels = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
 //------------------------------------------------------------------------------
 // Definitions
-
-export { LogLevels } from './definitions.d';
 
 export interface Logger extends winston.LoggerInstance {
 	fatal(msg: string, meta?: any, callback?: () => void): Logger;
