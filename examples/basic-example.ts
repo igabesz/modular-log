@@ -24,7 +24,7 @@ logger.error('Testing', { cnt: cnt++ });
 logger.warn('Testing', { cnt: cnt++ });
 logger.success('Testing', { cnt: cnt++ });
 logger.info('Testing', { cnt: cnt++ });
-logger.debug('Testing', { cnt: cnt++ });
+logger.debug('Testing', [ cnt++, cnt++, cnt++]);
 logger.trace('Testing', { cnt: cnt++ });
 logger.trace('canContinue', Log.canContinue());
 
