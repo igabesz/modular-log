@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "typings": "lib/index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"build": "tsc -p src",
+	"prepublish": "npm run build"
   },
   "keywords": [
     "winston",
@@ -13,6 +15,10 @@
     "logging",
     "modular"
   ],
+  "repository": {
+	  "type": "git",
+	  "url": "http://github.com/igabesz/modular-log"
+  },
   "author": "Gábor IMRE",
   "license": "MIT",
   "dependencies": {

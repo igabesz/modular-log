@@ -1,7 +1,4 @@
-.atomignore
-.editorconfig
-typings.json
-tslint.json
-src/
-*.log
-.npmignore
+*
+!lib
+!package.json
+!LICENSE
