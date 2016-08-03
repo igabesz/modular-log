@@ -4,36 +4,17 @@ import * as moment from 'moment';
 import * as colors from 'colors/safe';
 import { Summarizer, SummarizerOptions } from './summarizer';
 
-export type LogLevels = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
 
 //------------------------------------------------------------------------------
 // Definitions
 
-export interface Logger extends winston.LoggerInstance {
-	fatal(msg: string, meta?: any, callback?: () => void): Logger;
-	error(msg: string, meta?: any, callback?: () => void): Logger;
-	warn(msg: string, meta?: any, callback?: () => void): Logger;
-	success(msg: string, meta?: any, callback?: () => void): Logger;
-	info(msg: string, meta?: any, callback?: () => void): Logger;
-	debug(msg: string, meta?: any, callback?: () => void): Logger;
-	trace(msg: string, meta?: any, callback?: () => void): Logger;
-	log(level: LogLevels, msg: string, meta?: any, callback?: () => void): Logger;
-}
-
+export type LogLevels = 'fatal' | 'error' | 'warn' | 'success' | 'info' | 'debug' | 'trace';
 export const levels = { fatal: 0, error: 1, warn: 2, success: 3, info: 4, debug: 5, trace: 6 };
 
 //------------------------------------------------------------------------------
 // Internal helpers
 
 const levelColors = { fatal: 'bgRed', error: 'red', warn: 'yellow', success: 'bgGreen', info: 'cyan', debug: 'blue', trace: 'blue' };
-
-function createRewriter(module: string) {
-	return (level: string, msg: string, meta: any): any => {
-		meta.at = Date.now();
-		meta.module = module;
-		return meta;
-	};
-};
 
 function createFormatter(useColors?: boolean) {
 	return (options: any) => {
@@ -44,8 +25,8 @@ function createFormatter(useColors?: boolean) {
 		useColors && (levelStr = colors[levelColors[options.level]](levelStr));
 		let pureMeta = _.omit(options.meta, ['at', 'module']);
 		let dataStr = '';
-		if (!_.isEmpty(pureMeta)) {
-			dataStr = '\t' + JSON.stringify(pureMeta);
+		if (options.meta.params) {
+			dataStr = '\t' + JSON.stringify(options.meta.params);
 			useColors && (dataStr = colors.gray(dataStr));
 		}
 		return `[${atStr}] ${levelStr} ${options.meta.module}: ${options.message}` + dataStr;
@@ -88,10 +69,32 @@ export function tryContinue() { return summarizer && summarizer.tryContinue(); }
 //------------------------------------------------------------------------------
 // Logger instances
 
-export function createLogger(module: string): Logger {
-	return <any>new winston.Logger(<any>{
-		levels,
-		transports,
-		rewriters: [ createRewriter(module) ],
-	});
+export function createLogger(module: string): Logger { return new Logger(module); }
+
+export class Logger {
+	private logger: winston.LoggerInstance;
+
+	constructor(private module: string) {
+		this.logger = new winston.Logger(<any>{
+			levels,
+			transports,
+		});
+	}
+
+	private getMeta(params?: any) {
+		return {
+			at: Date.now(),
+			module: this.module,
+			params
+		};
+	}
+
+	fatal(msg: string, params?: any): Logger { this.logger.log('fatal', msg, this.getMeta(params)); return this; };
+	error(msg: string, params?: any): Logger { this.logger.log('error', msg, this.getMeta(params)); return this; };
+	warn(msg: string, params?: any): Logger { this.logger.log('warn', msg, this.getMeta(params)); return this; };
+	success(msg: string, params?: any): Logger { this.logger.log('success', msg, this.getMeta(params)); return this; };
+	info(msg: string, params?: any): Logger { this.logger.log('info', msg, this.getMeta(params)); return this; };
+	debug(msg: string, params?: any): Logger { this.logger.log('debug', msg, this.getMeta(params)); return this; };
+	trace(msg: string, params?: any): Logger { this.logger.log('trace', msg, this.getMeta(params)); return this; };
+	log(level: LogLevels, msg: string, params?: any): Logger { this.logger.log(level, msg, this.getMeta(params)); return this; };
 }

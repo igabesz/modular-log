@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "outDir": "../lib/",
+        "outDir": "../lib",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "declaration": true,
@@ -11,9 +11,8 @@
         "preserveConstEnums": true,
         "sourceMap": true
     },
-    "filesGlob": [
-        "./*.ts",
-        "../typings/main.d.ts"
+    "include": [
+        "./**/*.ts"
     ],
     "atom": {
         "rewriteTsconfig": false
