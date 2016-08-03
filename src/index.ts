@@ -69,12 +69,24 @@ export function tryContinue() { return summarizer && summarizer.tryContinue(); }
 //------------------------------------------------------------------------------
 // Logger instances
 
-export function createLogger(module: string): Logger { return new Logger(module); }
+export function createLogger(module: string): Logger { return new LoggerImplementation(module); }
 
-export class Logger {
+export interface Logger {
+	module: string;
+	fatal(msg: string, params?: any): Logger;
+	error(msg: string, params?: any): Logger;
+	warn(msg: string, params?: any): Logger;
+	success(msg: string, params?: any): Logger;
+	info(msg: string, params?: any): Logger;
+	debug(msg: string, params?: any): Logger;
+	trace(msg: string, params?: any): Logger;
+	log(level: LogLevels, msg: string, params?: any): Logger;
+}
+
+class LoggerImplementation implements Logger {
 	private logger: winston.LoggerInstance;
 
-	constructor(private module: string) {
+	constructor(public module: string) {
 		this.logger = new winston.Logger(<any>{
 			levels,
 			transports,
