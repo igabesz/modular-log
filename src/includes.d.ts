@@ -12,3 +12,10 @@ declare module 'colors/safe' {
 	export function gray(text: string): string;
 	export function grey(text: string): string;
 }
+
+declare module 'winston' {
+	export interface TransportInstance {}
+	export class Transport { constructor(options?: any); }
+	export var Logger: any;
+	export var transports: any;
+}

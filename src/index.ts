@@ -39,7 +39,11 @@ function createFormatter(useColors?: boolean) {
 let transports: winston.TransportInstance[] = [];
 let summarizer: Summarizer = null;
 
-export interface ConsoleLoggerOptions extends winston.ConsoleTransportOptions {}
+/** extends winston.ConsoleTransportOptions */
+export interface ConsoleLoggerOptions  {
+	level?: string;
+	formatter?: Function;
+}
 
 export function setupConsoleLogger(options?: ConsoleLoggerOptions) {
 	options = options || {};
@@ -47,7 +51,16 @@ export function setupConsoleLogger(options?: ConsoleLoggerOptions) {
 	transports.push(new winston.transports.Console(options));
 }
 
-export interface FileLoggerOptions extends winston.FileTransportOptions {}
+/** extends winston.FileTransportOptions */
+export interface FileLoggerOptions  {
+	filename?: string;
+	dirname?: string;
+	stream?: any;
+	tailable?: boolean;
+	json?: boolean;
+	formatter?: Function;
+	level?: string;
+}
 
 export function setupFileLogger(options?: FileLoggerOptions) {
 	options = options || {};
@@ -84,7 +97,7 @@ export interface Logger {
 }
 
 class LoggerImplementation implements Logger {
-	private logger: winston.LoggerInstance;
+	private logger: any;
 
 	constructor(public module: string) {
 		this.logger = new winston.Logger(<any>{
