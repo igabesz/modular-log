@@ -1,4 +1,5 @@
 *
 !lib/*
+!includes.d.ts
 !package.json
 !LICENSE

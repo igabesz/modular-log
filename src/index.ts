@@ -1,3 +1,5 @@
+/// <reference path="../includes.d.ts"/>
+
 import * as winston from 'winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';

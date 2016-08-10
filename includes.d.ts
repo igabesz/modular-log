@@ -1,3 +1,10 @@
+declare module 'winston' {
+	export interface TransportInstance {}
+	export class Transport { constructor(options?: any); }
+	export var Logger: any;
+	export var transports: any;
+}
+
 declare module 'colors/safe' {
 	export function setTheme(theme:any):any;
 
@@ -11,11 +18,4 @@ declare module 'colors/safe' {
 	export function white(text: string): string;
 	export function gray(text: string): string;
 	export function grey(text: string): string;
-}
-
-declare module 'winston' {
-	export interface TransportInstance {}
-	export class Transport { constructor(options?: any); }
-	export var Logger: any;
-	export var transports: any;
 }
