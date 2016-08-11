@@ -1,5 +1,5 @@
-/// <reference path="../includes.d.ts"/>
-
+/** Note on publish & build: This line must be in the exported .d.ts file to make it work... */
+///<reference path="../includes"/>
 import * as winston from 'winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';

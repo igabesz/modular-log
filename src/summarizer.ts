@@ -1,3 +1,4 @@
+///<reference path="../includes"/>
 import * as winston from 'winston';
 
 

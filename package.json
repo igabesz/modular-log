@@ -1,13 +1,12 @@
 {
   "name": "modular-log",
-  "version": "0.3.5",
+  "version": "0.3.8",
   "description": "Modular components based on Winston logger",
   "main": "lib/index.js",
   "typings": "lib/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p src",
-    "prepublish": "npm run build"
+    "build": "tsc -p src"
   },
   "keywords": [
     "winston",
@@ -24,7 +23,6 @@
   "dependencies": {
     "@types/lodash": "0.0.28",
     "@types/moment": "^2.11.29",
-    "@types/node": "^6.0.32",
     "colors": "^1.1.2",
     "lodash": "^4.14.2",
     "moment": "^2.14.1",
