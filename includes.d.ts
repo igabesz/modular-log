@@ -1,6 +1,8 @@
 declare module 'winston' {
 	export interface TransportInstance {}
-	export class Transport { constructor(options?: any); }
+	export interface Transport {
+		log: Function;
+	}
 	export var Logger: any;
 	export var transports: any;
 }

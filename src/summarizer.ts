@@ -8,20 +8,22 @@ export interface SummarizerOptions {
 	[param: string]: any;
 }
 
-export class Summarizer extends winston.Transport {
+export class Summarizer {
 	name = 'summarizer';
 	level: string;
 	allowed: { [level: string]: number };
 	cnt: { [level: string]: number };
+	transport: winston.Transport;
 
 	constructor(options: SummarizerOptions) {
-		super(options);
+		this.transport = new (<any>winston).Transport(options);
+		this.transport.log = (level, msg, meta, callback) => this.log(level, msg, meta, callback);
 		this.level = options.level || 'warn';
 		this.allowed = options.allowed || {};
 		this.cnt = {};
 	}
 
-	log(level, msg, meta, callback) {
+	private log(level, msg, meta, callback) {
 		if (!this.cnt[level]) { this.cnt[level] = 0; }
 		this.cnt[level]++;
 		callback(null, true);
