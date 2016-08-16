@@ -1,6 +1,6 @@
 {
   "name": "modular-log",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "Modular components based on Winston logger",
   "main": "lib/index.js",
   "typings": "lib/index",
