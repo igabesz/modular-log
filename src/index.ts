@@ -21,7 +21,7 @@ const levelColors = { fatal: 'bgRed', error: 'red', warn: 'yellow', success: 'bg
 function createFormatter(useColors?: boolean) {
 	return (options: any) => {
 		//console.log(options);
-		let atStr = moment(options.meta.at).format('YYYY-MM-DD hh:mm:ss');
+		let atStr = moment(options.meta.at).format('YYYY-MM-DD HH:mm:ss');
 		useColors && (atStr = colors.gray(atStr));
 		let levelStr = options.level.toUpperCase();
 		useColors && (levelStr = colors[levelColors[options.level]](levelStr));
