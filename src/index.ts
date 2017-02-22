@@ -98,7 +98,7 @@ class LoggerImplementation implements Logger {
 	private logger: any;
 
 	constructor(public module: string) {
-		this.logger = new winston.Logger(<any>{
+		this.logger = new winston.Logger({
 			levels,
 			transports,
 		});
