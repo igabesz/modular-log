@@ -1,12 +1,3 @@
-declare module 'winston' {
-	export interface TransportInstance {}
-	export interface Transport {
-		log: Function;
-	}
-	export var Logger: any;
-	export var transports: any;
-}
-
 declare module 'colors/safe' {
 	export function setTheme(theme:any):any;
 

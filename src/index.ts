@@ -1,5 +1,3 @@
-/** Note on publish & build: This line must be in the exported .d.ts file to make it work... */
-///<reference path="../includes"/>
 import * as winston from 'winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -41,8 +39,7 @@ function createFormatter(useColors?: boolean) {
 let transports: winston.TransportInstance[] = [];
 let summarizer: Summarizer = null;
 
-/** extends winston.ConsoleTransportOptions */
-export interface ConsoleLoggerOptions  {
+export interface ConsoleLoggerOptions extends winston.ConsoleTransportOptions {
 	level?: string;
 	formatter?: Function;
 }
@@ -53,8 +50,7 @@ export function setupConsoleLogger(options?: ConsoleLoggerOptions) {
 	transports.push(new winston.transports.Console(options));
 }
 
-/** extends winston.FileTransportOptions */
-export interface FileLoggerOptions  {
+export interface FileLoggerOptions extends winston.FileTransportOptions {
 	filename?: string;
 	dirname?: string;
 	stream?: any;
@@ -74,7 +70,7 @@ export function setupFileLogger(options?: FileLoggerOptions) {
 export function setupSummarizer(options?: SummarizerOptions) {
 	options = options || {};
 	summarizer = new Summarizer(options);
-	transports.push(summarizer);
+	transports.push(<any>summarizer);
 }
 
 export function sumLog() { return summarizer ? summarizer.cnt : {}; }

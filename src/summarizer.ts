@@ -1,5 +1,4 @@
-///<reference path="../includes"/>
-import * as winston from 'winston';
+import { Transport, TransportInstance } from 'winston';
 
 
 export interface SummarizerOptions {
@@ -13,10 +12,10 @@ export class Summarizer {
 	level: string;
 	allowed: { [level: string]: number };
 	cnt: { [level: string]: number };
-	transport: winston.Transport;
+	transport: TransportInstance & { log?: any };
 
 	constructor(options: SummarizerOptions) {
-		this.transport = new (<any>winston).Transport(options);
+		this.transport = new Transport(options);
 		this.transport.log = (level, msg, meta, callback) => this.log(level, msg, meta, callback);
 		this.level = options.level || 'warn';
 		this.allowed = options.allowed || {};
