@@ -27,7 +27,7 @@ function createFormatter(useColors?: boolean) {
 		useColors && (levelStr = colors[levelColors[options.level]](levelStr));
 		let pureMeta = _.omit(options.meta, ['at', 'module']);
 		let dataStr = '';
-		if (options.meta.params) {
+		if (options.meta.params !== undefined) {
 			dataStr = '\t' + JSON.stringify(options.meta.params);
 			useColors && (dataStr = colors.gray(dataStr));
 		}
@@ -112,7 +112,7 @@ class LoggerImplementation implements Logger {
 		return {
 			at: Date.now(),
 			module: this.module,
-			params
+			params,
 		};
 	}
 
