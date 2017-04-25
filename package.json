@@ -23,11 +23,11 @@
   "author": "Gábor IMRE",
   "license": "MIT",
   "dependencies": {
-    "@types/winston": "^2.2.0",
+    "@types/winston": "~2.2.0",
     "colors": "^1.1.2",
     "lodash": "^4.14.2",
     "moment": "^2.14.1",
-    "winston": "^2.2.0"
+    "winston": "~2.2.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.52"
