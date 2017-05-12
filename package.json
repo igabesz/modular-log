@@ -1,6 +1,6 @@
 {
   "name": "modular-log",
-  "version": "0.3.12",
+  "version": "0.4.0",
   "description": "Modular components based on Winston logger",
   "main": "lib/index.js",
   "typings": "lib/index",
@@ -27,7 +27,8 @@
     "colors": "^1.1.2",
     "lodash": "^4.14.2",
     "moment": "^2.14.1",
-    "winston": "~2.2.0"
+    "winston": "~2.2.0",
+    "winston-mongodb": "~2.0.9"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.52"

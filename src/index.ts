@@ -4,6 +4,12 @@ import * as moment from 'moment';
 import * as colors from 'colors/safe';
 import { Summarizer, SummarizerOptions } from './summarizer';
 
+/**
+* Requiring `winston-mongodb` will expose
+* `winston.transports.MongoDB`
+*/
+require('winston-mongodb').MongoDB;
+
 
 //------------------------------------------------------------------------------
 // Definitions
@@ -31,7 +37,7 @@ function createFormatter(useColors?: boolean) {
 		}
 		return `[${atStr}] ${levelStr} ${options.meta.module}: ${options.message}` + dataStr;
 	};
-};
+}
 
 //------------------------------------------------------------------------------
 // Transport layers
@@ -65,6 +71,33 @@ export function setupFileLogger(options?: FileLoggerOptions) {
 	options.formatter = createFormatter();
 	options.json = false;
 	transports.push(new winston.transports.File(options));
+}
+
+export interface MongoDBLoggerOptions extends winston.ConsoleTransportOptions {
+	level?: string;
+	// formatter?: Function;
+	silent?: boolean;
+	db: string;
+	options?: any;
+	collection?: string;
+	storeHost?: boolean;
+	username?: string;
+	password?: string;
+	label?: string;
+	name?: string;
+	capped?: boolean;
+	cappedSize?: number;
+	cappedMax?: number;
+	tryReconnect?: boolean;
+	decolorize?: boolean;
+	expireAfterSeconds?: number;
+}
+
+export function setupMongoDBLogger(options?: MongoDBLoggerOptions) {
+	if (!options.db) throw new Error('Parameter `db` is missing in options.');
+	options.formatter = createFormatter();
+	// @TODO: type definition for MongoDB transport is missing
+	transports.push(new (<any>winston).transports.MongoDB(options));
 }
 
 export function setupSummarizer(options?: SummarizerOptions) {
@@ -112,12 +145,12 @@ class LoggerImplementation implements Logger {
 		};
 	}
 
-	fatal(msg: string, params?: any): Logger { this.logger.log('fatal', msg, this.getMeta(params)); return this; };
-	error(msg: string, params?: any): Logger { this.logger.log('error', msg, this.getMeta(params)); return this; };
-	warn(msg: string, params?: any): Logger { this.logger.log('warn', msg, this.getMeta(params)); return this; };
-	success(msg: string, params?: any): Logger { this.logger.log('success', msg, this.getMeta(params)); return this; };
-	info(msg: string, params?: any): Logger { this.logger.log('info', msg, this.getMeta(params)); return this; };
-	debug(msg: string, params?: any): Logger { this.logger.log('debug', msg, this.getMeta(params)); return this; };
-	trace(msg: string, params?: any): Logger { this.logger.log('trace', msg, this.getMeta(params)); return this; };
-	log(level: LogLevels, msg: string, params?: any): Logger { this.logger.log(level, msg, this.getMeta(params)); return this; };
+	fatal(msg: string, params?: any): Logger { this.logger.log('fatal', msg, this.getMeta(params)); return this; }
+	error(msg: string, params?: any): Logger { this.logger.log('error', msg, this.getMeta(params)); return this; }
+	warn(msg: string, params?: any): Logger { this.logger.log('warn', msg, this.getMeta(params)); return this; }
+	success(msg: string, params?: any): Logger { this.logger.log('success', msg, this.getMeta(params)); return this; }
+	info(msg: string, params?: any): Logger { this.logger.log('info', msg, this.getMeta(params)); return this; }
+	debug(msg: string, params?: any): Logger { this.logger.log('debug', msg, this.getMeta(params)); return this; }
+	trace(msg: string, params?: any): Logger { this.logger.log('trace', msg, this.getMeta(params)); return this; }
+	log(level: LogLevels, msg: string, params?: any): Logger { this.logger.log(level, msg, this.getMeta(params)); return this; }
 }
