@@ -11,6 +11,13 @@ Log.setupFileLogger({
 	level: 'warn',
 });
 
+// Log.setupMongoDBLogger({
+// 	level: 'warn',
+// 	db: 'mongodb://localhost:27017/test',
+// 	storeHost: true,
+// 	// name: 'test'
+// });
+
 Log.setupSummarizer({
 	level: 'warn',
 	allowed: { fatal: 0 }
