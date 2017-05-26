@@ -23,6 +23,7 @@
   "author": "Gábor IMRE",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/logging-winston": "^0.4.1",
     "@types/winston": "~2.2.0",
     "colors": "^1.1.2",
     "lodash": "^4.14.2",

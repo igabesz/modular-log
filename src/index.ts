@@ -1,7 +1,9 @@
 import * as winston from 'winston';
+import * as StackdriverLoggingWinston from '@google-cloud/logging-winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as colors from 'colors/safe';
+import * as os from 'os'; 
 import { Summarizer, SummarizerOptions } from './summarizer';
 
 /**
@@ -98,6 +100,62 @@ export function setupMongoDBLogger(options?: MongoDBLoggerOptions) {
 	options.formatter = createFormatter();
 	// @TODO: type definition for MongoDB transport is missing
 	transports.push(new (<any>winston).transports.MongoDB(options));
+}
+
+export interface StackdriverLoggerOptions extends winston.ConsoleTransportOptions {
+	level?: string;
+	// formatter?: Function;
+	levels?: typeof levels;
+	projectId?: string;
+	// keyFilename?: string;
+	logName?: string;
+	resource?: any;
+	storeHost?: boolean;
+}
+
+const LEVEL_NAME_TO_STACKDRIVER_CODE = {
+	fatal: 2,
+	error: 3,
+	warn: 4,
+	success: 5,
+	info: 6,
+	debug: 7,
+	trace: 7
+};
+
+class CustomStackdriverLoggingWinston extends StackdriverLoggingWinston {
+
+	protected hostname: string;
+
+	constructor(protected options: StackdriverLoggerOptions) {
+		super(options);
+		if (options.storeHost) this.hostname = os.hostname();
+	}
+
+	log(levelName, msg, metadata, callback) {
+		if (this.options.storeHost) {
+			metadata = metadata || {};
+			metadata.hostname = this.hostname;
+		}
+		if (this.options.label) {
+			metadata = metadata || {};
+			metadata.label = this.options.label;
+		}
+		return super.log(levelName, msg, metadata, callback);
+	}
+
+}
+
+export function setupStackdirverLogger(options?: StackdriverLoggerOptions) {
+	options.formatter = createFormatter();
+	options.levels = options.levels || LEVEL_NAME_TO_STACKDRIVER_CODE;
+	if (options.projectId) {
+		options.resource = options.resource || {};
+		options.resource.type = options.resource.type || 'global';
+		options.resource.labels = options.resource.labels || {};
+		options.resource.labels.project_id = options.resource.labels.project_id || options.projectId;
+	}
+	transports.push(<StackdriverLoggingWinston>new CustomStackdriverLoggingWinston(options));
 }
 
 export function setupSummarizer(options?: SummarizerOptions) {
