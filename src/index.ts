@@ -1,9 +1,9 @@
 import * as winston from 'winston';
-import * as StackdriverLoggingWinston from '@google-cloud/logging-winston';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as colors from 'colors/safe';
-import * as os from 'os'; 
+import * as os from 'os';
+import WinstonStackdriver from './winston-stackdriver';
 import { Summarizer, SummarizerOptions } from './summarizer';
 
 /**
@@ -26,7 +26,6 @@ const levelColors = { fatal: 'bgRed', error: 'red', warn: 'yellow', success: 'bg
 
 function createFormatter(useColors?: boolean) {
 	return (options: any) => {
-		//console.log(options);
 		let atStr = moment(options.meta.at).format('YYYY-MM-DD HH:mm:ss');
 		useColors && (atStr = colors.gray(atStr));
 		let levelStr = options.level.toUpperCase();
@@ -123,39 +122,9 @@ const LEVEL_NAME_TO_STACKDRIVER_CODE = {
 	trace: 7
 };
 
-class CustomStackdriverLoggingWinston extends StackdriverLoggingWinston {
-
-	protected hostname: string;
-
-	constructor(protected options: StackdriverLoggerOptions) {
-		super(options);
-		if (options.storeHost) this.hostname = os.hostname();
-	}
-
-	log(levelName, msg, metadata, callback) {
-		if (this.options.storeHost) {
-			metadata = metadata || {};
-			metadata.hostname = this.hostname;
-		}
-		if (this.options.label) {
-			metadata = metadata || {};
-			metadata.label = this.options.label;
-		}
-		return super.log(levelName, msg, metadata, callback);
-	}
-
-}
-
 export function setupStackdirverLogger(options?: StackdriverLoggerOptions) {
 	options.formatter = createFormatter();
-	options.levels = options.levels || LEVEL_NAME_TO_STACKDRIVER_CODE;
-	if (options.projectId) {
-		options.resource = options.resource || {};
-		options.resource.type = options.resource.type || 'global';
-		options.resource.labels = options.resource.labels || {};
-		options.resource.labels.project_id = options.resource.labels.project_id || options.projectId;
-	}
-	transports.push(<StackdriverLoggingWinston>new CustomStackdriverLoggingWinston(options));
+	transports.push(new WinstonStackdriver(options));
 }
 
 export function setupSummarizer(options?: SummarizerOptions) {
