@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as colors from 'colors/safe';
 import * as os from 'os';
+import * as mkdirp from 'mkdirp';
 import WinstonStackdriver from './winston-stackdriver';
 import { Summarizer, SummarizerOptions } from './summarizer';
 
@@ -67,11 +68,19 @@ export interface FileLoggerOptions extends winston.FileTransportOptions {
 	level?: string;
 }
 
-export function setupFileLogger(options?: FileLoggerOptions) {
+export async function setupFileLogger(options?: FileLoggerOptions) {
 	options = options || {};
 	options.formatter = createFormatter();
 	options.json = false;
-	transports.push(new winston.transports.File(options));
+	await new Promise<string>((resolve, reject) => {
+		mkdirp(options.dirname, (err, made) => {
+			if (err) { reject(err); }
+			else {
+				transports.push(new winston.transports.File(options));
+				resolve(made);
+			}
+		});
+	});
 }
 
 export interface MongoDBLoggerOptions extends winston.ConsoleTransportOptions {
